@@ -3,5 +3,6 @@ import { TypeOrmService } from './typeorm.service';
 
 @Module({
   providers: [TypeOrmService],
+  exports: [TypeOrmService],
 })
 export class DatabaseModule {}
