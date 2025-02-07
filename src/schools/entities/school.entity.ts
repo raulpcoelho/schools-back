@@ -20,8 +20,8 @@ export class School {
   @Column({ name: 'ds_endereco', length: 256 })
   dsEndereco!: string;
 
-  @Column({ name: 'nu_endereco' })
-  nuEndereco!: number;
+  @Column({ name: 'nu_endereco', nullable: true })
+  nuEndereco: number;
 
   @Column({ name: 'no_bairro', length: 256 })
   noBairro!: string;
