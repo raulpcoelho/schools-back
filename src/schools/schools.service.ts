@@ -1,11 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { TypeOrmService } from 'src/database/typeorm.service';
 import { School } from './entities/school.entity';
+import { ILike } from 'typeorm';
+import { GetSchoolDto } from './dtos/get-schools.dto';
 
 @Injectable()
 export class SchoolsService {
   constructor(private readonly typeOrmService: TypeOrmService) {}
-  async getAll(page: number): Promise<School[]> {
+  async getAll(getSchoolDto: GetSchoolDto): Promise<School[]> {
+    let { noEntidade, page } = getSchoolDto;
+    if (!noEntidade) noEntidade = '';
+    if (!page || page < 1) page = 1;
+
     const pageSize = 10;
     const offset = (page - 1) * pageSize;
 
@@ -13,6 +19,7 @@ export class SchoolsService {
       const schools = await this.typeOrmService.manager.find(School, {
         skip: offset,
         take: pageSize,
+        where: { noEntidade: ILike(`%${noEntidade}%`) },
       });
       return schools;
     } catch (error) {
@@ -20,13 +27,15 @@ export class SchoolsService {
     }
   }
 
-  async getById(id: number) {
-    console.log(id);
-    return null;
-  }
-
-  async getByName(name: string) {
-    console.log(name);
-    return null;
+  async getById(coEntidade: number): Promise<School> {
+    try {
+      const school = await this.typeOrmService.manager.findOne(School, { where: { coEntidade: String(coEntidade) } });
+      if (!school) {
+        throw new NotFoundException('School not found');
+      }
+      return school;
+    } catch (error) {
+      throw error;
+    }
   }
 }
