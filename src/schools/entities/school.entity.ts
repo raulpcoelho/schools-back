@@ -29,11 +29,11 @@ export class School {
   @Column({ name: 'no_regiao', length: 20 })
   noRegiao!: string;
 
-  @Column({ name: 'nu_ddd' })
-  nuDdd!: number;
+  @Column({ name: 'nu_ddd', nullable: true })
+  nuDdd: number;
 
-  @Column({ name: 'nu_telefone', length: 20 })
-  nuTelefone!: string;
+  @Column({ name: 'nu_telefone', length: 20, nullable: true })
+  nuTelefone: string;
 
   @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt!: Date;
