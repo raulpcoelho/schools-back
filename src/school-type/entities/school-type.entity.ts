@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { School } from 'src/schools/entities/school.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
 @Entity({ name: 'school_type' })
 export class SchoolType {
@@ -7,6 +8,9 @@ export class SchoolType {
 
   @Column({ name: 'name', length: 256 })
   name!: string;
+
+  @OneToMany(() => School, school => school.schoolType)
+  schools: Relation<School>[];
 
   @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt!: Date;

@@ -1,4 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { City } from 'src/cities/entities/city.entity';
+import { Region } from 'src/regions/entities/region.entity';
+import { SchoolType } from 'src/school-type/entities/school-type.entity';
+import { State } from 'src/states/entities/state.entity';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity({ name: 'school' })
 export class School {
@@ -8,14 +12,17 @@ export class School {
   @Column({ name: 'no_entidade', length: 256 })
   noEntidade!: string;
 
-  @Column({ name: 'no_municipio', length: 256 })
-  noMunicipio!: string;
+  @ManyToOne(() => City, city => city.schools)
+  @JoinColumn({ name: 'city_id' })
+  city: City;
 
-  @Column({ name: 'sg_uf', length: 5 })
-  sgUf!: string;
+  @ManyToOne(() => State, state => state.schools)
+  @JoinColumn({ name: 'state_id' })
+  state: State;
 
-  @Column({ name: 'rede', length: 256 })
-  rede!: string;
+  @ManyToOne(() => SchoolType, schoolType => schoolType.schools)
+  @JoinColumn({ name: 'school_type_id' })
+  schoolType: SchoolType;
 
   @Column({ name: 'ds_endereco', length: 256 })
   dsEndereco!: string;
@@ -26,8 +33,9 @@ export class School {
   @Column({ name: 'no_bairro', length: 256 })
   noBairro!: string;
 
-  @Column({ name: 'no_regiao', length: 20 })
-  noRegiao!: string;
+  @ManyToOne(() => Region, region => region.schools)
+  @JoinColumn({ name: 'region_id' })
+  region: Region;
 
   @Column({ name: 'nu_ddd', nullable: true })
   nuDdd: number;
