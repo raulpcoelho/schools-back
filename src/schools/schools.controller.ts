@@ -1,14 +1,14 @@
 import { Controller, Get, NotFoundException, Param, Query } from '@nestjs/common';
 import { SchoolsService } from './schools.service';
-import { School } from './entities/school.entity';
 import { GetSchoolDto } from './dtos/get-schools.dto';
+import { SchoolDto } from './dtos/school.dto';
 
 @Controller('schools')
 export class SchoolsController {
   constructor(private readonly schoolsService: SchoolsService) {}
 
   @Get()
-  async getAll(@Query() getSchoolDto: GetSchoolDto): Promise<School[] | { error: string }> {
+  async getAll(@Query() getSchoolDto: GetSchoolDto): Promise<SchoolDto[] | { error: string }> {
     try {
       return await this.schoolsService.getAll(getSchoolDto);
     } catch (error) {
@@ -18,7 +18,7 @@ export class SchoolsController {
   }
 
   @Get(':coEntidade')
-  async getById(@Param('coEntidade') coEntidade: number): Promise<School | { error: string }> {
+  async getById(@Param('coEntidade') coEntidade: number): Promise<SchoolDto | { error: string }> {
     if (isNaN(coEntidade)) {
       return { error: 'Invalid parameter' };
     }
