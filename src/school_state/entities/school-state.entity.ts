@@ -1,15 +1,15 @@
-import { School } from 'src/schools/entities/school.entity';
+import { School } from '../../schools/entities/school.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm';
 
-@Entity({ name: 'state' })
-export class State {
+@Entity({ name: 'school_state' })
+export class SchoolState {
   @PrimaryGeneratedColumn('increment', { name: 'id' })
   id!: number;
 
   @Column({ name: 'name', length: 256 })
   name!: string;
 
-  @OneToMany(() => School, school => school.state)
+  @OneToMany(() => School, school => school.schoolState)
   schools: Relation<School>[];
 
   @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
