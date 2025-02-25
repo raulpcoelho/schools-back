@@ -1,3 +1,7 @@
+## Recife-Pernambuco Schools List API
+
+This API provides access to a list of schools in Recife, Pernambuco. It allows users to retrieve information about all schools or a specific school by its ID (Código Inep).
+
 ## API Routes
 
 ### Get All Schools
